@@ -1,5 +1,9 @@
-const mongoose = require('mongoose');
-const Location = require('../models/location');
+/* Seed the development database with randomized entries. */
+
+const mongoose = require("mongoose");
+const Location = require("../models/location");
+const {namesOne, namesTwo, descriptions} = require('./seedHelper')
+const cities = require("./cities")
 
 const uri = 'mongodb://localhost:27017/playMTGDB'
 
@@ -16,21 +20,33 @@ mongoose.connect(uri, {
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+const randomElement = array => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
-    const s = new Location({name: 'Seedville', location: 'Seed st.'});
-    console.log(s);
-
     console.log("Deleting all locations...")
     await Location.deleteMany({});
-
+    
     console.log("Seeding... ");
-    await s.save().then(() => {
-        console.log("Inserted")
-    })
-    .catch(err => {
-        console.log(err)
-    })
+    
+    for(let i = 0; i < 50; i++){
+        const nameOne = randomElement(namesOne);
+        const nameTwo = randomElement(namesTwo);
+        const description = randomElement(descriptions);
+        const cityElement = randomElement(cities);
+
+        const location = `${cityElement.city}, ${cityElement.state}`
+        const s = new Location({name: nameOne + nameTwo, location: location, description: description});
+        
+        await s.save()
+        .then(() => {
+            console.log(`Created entry ${i+1}`);
+        })
+        .catch( err => {
+            console.log(err);
+        });
+    }
 }
 
-seedDB()
+seedDB().then(() => {
+    db.close();
+})
