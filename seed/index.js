@@ -6,7 +6,6 @@ const {namesOne, namesTwo, descriptions} = require('./seedHelper')
 const cities = require("./cities")
 
 const uri = 'mongodb://localhost:27017/playMTGDB'
-
 mongoose.connect(uri, {
     useNewUrlParser: true, 
     useUnifiedTopology: true})
@@ -17,9 +16,10 @@ mongoose.connect(uri, {
         console.log("ERROR CONNECTING TO PLAYMTGDB");
         console.log(err);
     });
-
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+// Select random element from array.
 const randomElement = array => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
@@ -28,6 +28,7 @@ const seedDB = async () => {
     
     console.log("Seeding... ");
     
+    // Produce 50 random locations from the helper files. 
     for(let i = 0; i < 50; i++){
         const nameOne = randomElement(namesOne);
         const nameTwo = randomElement(namesTwo);
