@@ -8,18 +8,18 @@ const namesOne = [
     "The Interdimensional",
     "Tyer's",
     "CM",
-    "Hooper's"
-]
+    "Hooper's",
+];
 
 const namesTwo = [
     " Cards",
     " Card Shoppee",
     " Emporium",
-    " Hangout", 
+    " Hangout",
     " Fantasy Land",
     " Games",
-    " Game World"
-]
+    " Game World",
+];
 
 const descriptions = [
     "Smells like feet",
@@ -28,14 +28,14 @@ const descriptions = [
     "Nice staff",
     "Mean staff.",
     "Really attractive staff",
-    "Uggo staff.", 
+    "Uggo staff.",
     "Creepy staff.",
     "Clean",
     "Nice selection.",
     "This is boring.",
     "Can't find parking",
     "Great food nearby.",
-    "Ripoff prices."
-]
+    "Ripoff prices.",
+];
 
-module.exports = {namesOne, namesTwo, descriptions}
+module.exports = { namesOne, namesTwo, descriptions };

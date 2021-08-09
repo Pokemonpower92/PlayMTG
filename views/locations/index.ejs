@@ -11,7 +11,7 @@
     <ul>
         <% for (let l of locations) { %>
             <li>
-                <%= l.name %>
+                <a href="/locations/<%=l._id%>""><%= l.name %></a>
             </li>
         <% } %>
     </ul>
