@@ -1,0 +1,12 @@
+.App {
+    display: flex;
+    flex-direction: column;
+    min-height:  100vh;
+}
+
+.App-main-content {
+    display: flex;
+    justify-content: center;
+    margin-left: 5%;
+    margin-right: 5%;
+}

@@ -1,6 +1,7 @@
 import { Component } from "react";
-import { Link } from "react-router-dom";
+import LocationCard from "../components/LocationCard";
 import api from "../api";
+import '../styles/LocationsPage.css'
 
 class LocationsPage extends Component {
     constructor(props) {
@@ -37,10 +38,7 @@ class LocationsPage extends Component {
                     {this.state.locations.map((l) => {
                         return (
                             <li key={l._id}>
-                                <Link to={`/locations/${l._id}`}>
-                                    {" "}
-                                    {l.name}
-                                </Link>
+                                <LocationCard className="LocationsPage-card" location={l} />
                             </li>
                         );
                     })}

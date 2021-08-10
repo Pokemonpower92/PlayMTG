@@ -1,0 +1,22 @@
+.HomePage {
+    display: flex;
+    height: 91vh;
+    background-image: url('../img/cards.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 90%;
+}
+
+.HomePage-text {
+    text-align: center;
+    color: #fff;
+    margin: auto;
+}
+
+.HomePage-text h1 {
+    font-size: 10rem;
+}
+
+.HomePage-text p {
+    font-size: 4rem;
+}
