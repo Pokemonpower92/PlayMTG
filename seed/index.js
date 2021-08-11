@@ -39,11 +39,15 @@ const seedDB = async () => {
         const cityElement = randomElement(cities);
 
         const location = `${cityElement.city}, ${cityElement.state}`;
-        const s = new Location({
+        let s = new Location({
             name: nameOne + nameTwo,
             location: location,
             description: description,
         });
+        
+        if (Math.floor(Math.random() * 100) >= 25) {
+            s.image ="https://source.unsplash.com/collection/190727/1600x900";
+        }
 
         await s
             .save()
