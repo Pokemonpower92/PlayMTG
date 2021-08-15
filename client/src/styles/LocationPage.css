@@ -1,0 +1,57 @@
+.LocationPage-loaded {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+}
+
+.LocationPage-loaded-content {
+    display: flex;
+}
+
+.LocationPage-loaded-header {
+    display: flex;
+}
+
+.LocationPage-loaded-header button {
+    height: 50%;
+    width: 4rem;
+    margin-left: 2%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.LocationPage-loaded-content-info {
+    width: 30rem;
+}
+
+.LocationPage-loaded-content-info-image {
+    height: 30rem;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 7px;
+}
+
+.LocationPage-loaded-content-info-image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 7px;
+}
+
+.LocationPage-loaded-content-info-text {
+    margin-top: 5%;
+    padding: 2%;
+    background-color: grey;
+    border-radius: 7px;
+}
+
+.LocationPage-loaded-content-text {
+    display: flex;
+    background-color: grey;
+    flex-grow: 1;
+    border-radius: 7px;
+    flex-direction: column;
+    padding: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+}

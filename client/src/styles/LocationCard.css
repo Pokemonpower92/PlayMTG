@@ -20,7 +20,7 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
-    border-radius: 7px;
+    border-radius: 7px 0 0 7px;
 }
 
 .LocationCard-content {
@@ -54,7 +54,12 @@
     border-bottom-right-radius: 7px;
 }
 
+.LocationCard-rating :hover{
+    background-color: rgb(71, 71, 71);
+    color: #fff;
+}
+
 .LocationCard-listitem-link :hover{
-    background-color: grey;
+    background-color: rgb(71, 71, 71);
     color: #fff;
 }

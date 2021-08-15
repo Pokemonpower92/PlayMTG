@@ -6,7 +6,7 @@ import Default from '../img/cards.jpg';
 
 const LocationCard = (props) => {
     const { location } = props;
-    {console.log(location.image)}
+    console.log(location.image)
 
     return (
         <div className="LocationCard">
