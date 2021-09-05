@@ -32,40 +32,52 @@ createLocation = (req, res) => {
 };
 
 updateLocation = async (req, res) => {
-    const { id } = red.params.id;
+    const id = req.params.id;
     const body = req.body;
 
     if (!id) {
-        req.status(400).json({
+        res.status(400).json({
             success: false,
             message: "No id given",
         });
     }
     if (!body) {
-        req.status(400).json({
+        res.status(400).json({
             success: false,
             message: "No body given.",
         });
     }
 
-    const location = await Poll.findById(id);
-
-    if (location) {
-        location.name = body.name;
-        location.location = body.location;
-        location.description = body.description;
-        location.rating = body.rating;
-
-        res.status(200).json({
-            success: true,
-            data: location,
-        });
-    } else {
+    const location = await Location.findById(id).catch( () => {
         res.status(404).json({
             success: false,
             message: `Location ${id} not found.`,
         });
-    }
+    });
+
+    location.name = body.name;
+    location.location = body.address;
+    location.description = body.description;
+    location.image = body.image;
+    location.phone = body.phone;
+    location.website = body.website;
+    location.rating = location.rating;
+
+    location.save()
+        .then(() => {
+            return res.status(200).json({
+                success: true,
+                data: location,
+            });
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(404).json({
+                err,
+                message: "Location not updated"
+            });
+        })
+
 };
 
 // TODO write this.

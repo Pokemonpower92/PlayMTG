@@ -62,9 +62,9 @@ class LocationPage extends Component {
                             )}
                         </div>
                         <div className="LocationPage-loaded-content-info-text">
-                            <p>{this.state.location.location}</p>
-                            <p>phone</p>
-                            <p>website</p>
+                            <p>Location: {this.state.location.location}</p>
+                            <p>Phone: {this.state.location.phone}</p>
+                            <p>Website: {this.state.location.website}</p>
                         </div>
                     </div>
                     <div className="LocationPage-loaded-content-text">
@@ -74,57 +74,6 @@ class LocationPage extends Component {
                         <div className="LocationPage-loaded-content-text-reviews">
                             <p>Reviews: </p>
                             <ul>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
                                 <li>
                                     <p>Sample review</p>
                                 </li>

@@ -18,6 +18,14 @@ const LocationSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    phone: {
+        type: String,
+        required: false,
+    },
+    website: {
+        type: String,
+        required: false,
+    },
     rating: {
         type: Number,
         required: false,

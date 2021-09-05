@@ -1,0 +1,30 @@
+.LocationEditPage-loaded-title {
+    text-align: center;
+}
+
+.LocationEditPage-loaded-form {
+    margin-top: 10%;
+    border-radius: 7px;
+    min-width: 50vw;
+    min-height: 70vh;
+}
+
+.LocationEditPage-loaded-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.LocationEditPage-loaded-form input {
+    border: 1px solid black;
+    border-radius: 7px;
+    margin-bottom: 2%;
+}
+
+.LocationEditPage-loaded-form textarea {
+    border: 1px solid black;
+    border-radius: 7px;
+    min-height: 20vh;
+    resize: vertical;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
