@@ -1,9 +1,15 @@
 import { Component } from "react";
 import { Route } from "react-router-dom";
-import { HomePage, LocationsPage, LocationPage, LocationEditPage } from "./pages/index";
+import {
+    HomePage,
+    LocationsPage,
+    LocationPage,
+    LocationEditPage,
+    ReviewsPage,
+} from "./pages/index";
 import MTGNavbar from "./components/MTGNavbar";
 import MTGFooter from "./components/MTGFooter";
-import './styles/App.css'
+import "./styles/App.css";
 
 class App extends Component {
     render() {
@@ -32,6 +38,11 @@ class App extends Component {
                         path="/locations/:id/edit"
                         exact
                         render={(props) => <LocationEditPage {...props} />}
+                    />
+                    <Route
+                        path="/locations/:id/reviews"
+                        exact
+                        render={(props) => <ReviewsPage {...props} />}
                     />
                 </div>
                 <MTGFooter />
