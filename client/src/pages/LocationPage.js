@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import Default from "../img/cards.jpg";
 import { locationAPI, reviewAPI } from "../api/index";
+import ReviewCard from "../components/ReviewCard";
 
 import "../styles/LocationPage.css";
 
@@ -110,12 +111,15 @@ class LocationPage extends Component {
                             <h2>Reviews</h2>
                             <ul>
                                 {this.state.reviews.map((r) => (
-                                    <li>{r.body}</li>
+                                    <ReviewCard 
+                                        className="ReviewCard"
+                                        review={r}
+                                    />
                                 ))}
                             </ul>
                             <hr></hr>
                         </div>
-                        <div classname="LocationPage-loaded-content-text-reviewform">
+                        <div className="LocationPage-loaded-content-text-reviewform">
                             <h2>Leave a review</h2>
                             <textarea
                                 name="review"
