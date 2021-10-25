@@ -1,5 +1,5 @@
 import { Component } from "react";
-import api from "../api";
+import { locationAPI } from "../api/index";
 import { Button } from "react-bootstrap";
 import "../styles/LocationEditPage.css";
 
@@ -16,12 +16,20 @@ class LocationEditPage extends Component {
             website: "",
             location: [],
         };
+
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleImageChange = this.handleImageChange.bind(this);
+        this.handleAddressChange = this.handleAddressChange.bind(this);
+        this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+        this.handlePhoneChange = this.handlePhoneChange.bind(this);
+        this.handleWebsiteChange = this.handleWebsiteChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount = async () => {
         const id = this.props.match.params.id;
 
-        await api.getLocationById(id).then((res) => {
+        await locationAPI.getLocationById(id).then((res) => {
             let location = res.data.data;
 
             this.setState({
@@ -35,14 +43,6 @@ class LocationEditPage extends Component {
                 website: location.website,
             });
         });
-
-        this.handleNameChange = this.handleNameChange.bind(this);
-        this.handleImageChange = this.handleImageChange.bind(this);
-        this.handleAddressChange = this.handleAddressChange.bind(this);
-        this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-        this.handlePhoneChange = this.handlePhoneChange.bind(this);
-        this.handleWebsiteChange = this.handleWebsiteChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     };
 
     handleNameChange = (evt) => {
@@ -83,13 +83,15 @@ class LocationEditPage extends Component {
 
     handleSubmit = async (evt) => {
         evt.preventDefault();
-        const { name, image, description, phone, address, website } = this.state;
+        const { name, image, description, phone, address, website } =
+            this.state;
         const payload = { name, image, description, phone, address, website };
 
-        await api.updateLocation(this.state.location._id, payload).then( res => {
-            window.alert("Location Sucessfully Edited");
-        })
-
+        await locationAPI
+            .updateLocation(this.state.location._id, payload)
+            .then((res) => {
+                window.alert("Location Sucessfully Edited");
+            });
     };
 
     render() {
@@ -165,7 +167,9 @@ class LocationEditPage extends Component {
                             onChange={this.handleDescriptionChange}
                             className="LocationEditPage-loaded-form-description"
                         ></textarea>
-                        <Button onClick={this.handleSubmit}>Edit</Button>
+                        <Button variant="secondary" onClick={this.handleSubmit}>
+                            Edit
+                        </Button>
                     </form>
                 </div>
             </div>

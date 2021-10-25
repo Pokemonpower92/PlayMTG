@@ -58,3 +58,13 @@
     margin-right: 2%;
     margin-bottom: 2%;
 }
+
+.LocationPage-loaded-content-text-reviewform-form {
+    width: 100%;
+    resize: none;
+    height: 80%;
+}
+
+.LocationPage-loaded-content-text-reviewform button {
+    margin-left: 50%;
+}

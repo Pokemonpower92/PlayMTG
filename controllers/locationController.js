@@ -56,12 +56,13 @@ updateLocation = async (req, res) => {
     });
 
     location.name = body.name;
-    location.location = body.address;
+    location.location = body.location;
     location.description = body.description;
     location.image = body.image;
     location.phone = body.phone;
     location.website = body.website;
     location.rating = location.rating;
+    location.reviews = []
 
     location.save()
         .then(() => {
@@ -71,7 +72,6 @@ updateLocation = async (req, res) => {
             });
         })
         .catch(err => {
-            console.log(err)
             return res.status(404).json({
                 err,
                 message: "Location not updated"
@@ -88,7 +88,7 @@ deleteLocation = async (req, res) => {
 getLocationById = async (req, res) => {
     const { id } = req.params;
 
-    const location = await Location.findById(id);
+    const location = await Location.findById(id).populate('reviews');
 
     if (location) {
         res.status(200).json({

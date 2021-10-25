@@ -28,3 +28,8 @@
     margin-top: 1%;
     margin-bottom: 1%;
 }
+
+.LocationEditPage-loaded-form button {
+    width: 20%;
+    margin: auto;
+}

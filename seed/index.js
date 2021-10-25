@@ -2,7 +2,9 @@
 
 const mongoose = require("mongoose");
 const Location = require("../models/location");
+const Review = require("../models/review");
 const { namesOne, namesTwo, descriptions } = require("./seedHelper");
+const { reviews } = require("./reviews");
 const cities = require("./cities");
 
 const uri = "mongodb://localhost:27017/playMTGDB";
@@ -25,6 +27,10 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 const randomElement = (array) =>
     array[Math.floor(Math.random() * array.length)];
 
+const randInt = () => {
+    return Math.floor(Math.random() * 5 + 1);
+};
+
 const seedDB = async () => {
     console.log("Deleting all locations...");
     await Location.deleteMany({});
@@ -44,9 +50,34 @@ const seedDB = async () => {
             location: location,
             description: description,
         });
-        
+
         if (Math.floor(Math.random() * 100) >= 25) {
-            s.image ="https://source.unsplash.com/collection/190727/1600x900";
+            s.image = "https://source.unsplash.com/collection/190727/1600x900";
+        }
+
+        // Generate random reviews.
+        for (let i = 0; i < randInt(); i++) {
+            const name = "The SeedMan";
+            const review = randomElement(reviews);
+            const rating = randInt();
+
+            let l = new Review({
+                author: name,
+                body: review,
+                rating: rating,
+                location: s,
+            });
+
+            await l
+                .save()
+                .then(() => {
+                    console.log(`Created review`);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            
+                s.reviews.push(l);
         }
 
         await s

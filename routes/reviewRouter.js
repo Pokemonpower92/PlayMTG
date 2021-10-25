@@ -1,6 +1,6 @@
 const express = require("express");
 const reviewController = require("../controllers/reviewController");
-const review = express.Router();
+const review = express.Router({mergeParams: true});
 
 review.get("/", reviewController.getReviews);
 review.get("/:id", reviewController.getReviewById);

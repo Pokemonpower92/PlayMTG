@@ -2,7 +2,7 @@ import { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import Default from "../img/cards.jpg";
-import api from "../api";
+import { locationAPI, reviewAPI } from "../api/index";
 
 import "../styles/LocationPage.css";
 
@@ -12,26 +12,60 @@ class LocationPage extends Component {
         this.state = {
             loading: true,
             edit: false,
+            review: "",
             location: [],
+            reviews: [],
         };
 
         this.toEdit = this.toEdit.bind(this);
+        this.handleReviewChange = this.handleReviewChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    componentDidMount = async () => {
+        const id = this.props.match.params.id;
+
+        await locationAPI.getLocationById(id).then((res) => {
+            this.setState({
+                loading: false,
+                location: res.data.data,
+                review: "",
+                reviews: res.data.data.reviews,
+            });
+        });
+    };
 
     toEdit = () => {
         const { history } = this.props;
         history.push(`/locations/${this.state.location._id}/edit`);
     };
 
-    componentDidMount = async () => {
-        const id = this.props.match.params.id;
-
-        await api.getLocationById(id).then((res) => {
-            this.setState({
-                loading: false,
-                location: res.data.data,
-            });
+    handleReviewChange = (evt) => {
+        this.setState({
+            [evt.target.name]: evt.target.value,
         });
+    };
+
+    handleSubmit = async () => {
+        alert("I submitted the review!");
+        const review = {
+            author: "McButt",
+            body: this.state.review,
+            rating: 5,
+            location: this.state.location,
+        };
+
+        await reviewAPI.createReview(this.state.location._id, review);
+
+        await locationAPI
+            .getLocationById(this.state.location._id)
+            .then((res) => {
+                this.setState({
+                    loading: false,
+                    location: res.data.data,
+                    review: "",
+                });
+            });
     };
 
     render() {
@@ -41,7 +75,6 @@ class LocationPage extends Component {
                 <h1>Loading</h1>
             </div>
         );
-
         // Render location components eventually.
         // For now render links.
         const loaded = (
@@ -56,9 +89,9 @@ class LocationPage extends Component {
                     <div className="LocationPage-loaded-content-info">
                         <div className="LocationPage-loaded-content-info-image">
                             {this.state.location.image ? (
-                                <img src={this.state.location.image} alt=""/>
+                                <img src={this.state.location.image} alt="" />
                             ) : (
-                                <img src={Default} alt=""/>
+                                <img src={Default} alt="" />
                             )}
                         </div>
                         <div className="LocationPage-loaded-content-info-text">
@@ -68,28 +101,34 @@ class LocationPage extends Component {
                         </div>
                     </div>
                     <div className="LocationPage-loaded-content-text">
-                        <p>Description: </p>
+                        <h2>Description</h2>
                         <p>{this.state.location.description}</p>
-                        <p>Rating</p>
+                        <hr></hr>
+                        <h2>Rating</h2>
+                        <hr></hr>
                         <div className="LocationPage-loaded-content-text-reviews">
-                            <p>Reviews: </p>
+                            <h2>Reviews</h2>
                             <ul>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
-                                <li>
-                                    <p>Sample review</p>
-                                </li>
+                                {this.state.reviews.map((r) => (
+                                    <li>{r.body}</li>
+                                ))}
                             </ul>
+                            <hr></hr>
+                        </div>
+                        <div classname="LocationPage-loaded-content-text-reviewform">
+                            <h2>Leave a review</h2>
+                            <textarea
+                                name="review"
+                                value={this.state.review}
+                                onChange={this.handleReviewChange}
+                                className="LocationPage-loaded-content-text-reviewform-form"
+                            ></textarea>
+                            <Button
+                                variant="secondary"
+                                onClick={this.handleSubmit}
+                            >
+                                Submit
+                            </Button>
                         </div>
                     </div>
                 </div>

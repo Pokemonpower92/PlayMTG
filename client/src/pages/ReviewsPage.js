@@ -1,6 +1,5 @@
 import { Component } from "react";
-import LocationCard from "../components/LocationCard";
-import api from "../api";
+import { reviewAPI } from "../api/index";
 import "../styles/LocationsPage.css";
 
 class ReviewsPage extends Component {
@@ -14,7 +13,7 @@ class ReviewsPage extends Component {
 
     componentDidMount = async () => {
         const id = this.props.match.params.id;
-        await api.getReviews(id).then((res) => {
+        await reviewAPI.getReviews(id).then((res) => {
             this.setState({
                 loading: false,
                 reviews: [...res.data.data],

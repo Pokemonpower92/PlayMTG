@@ -1,7 +1,7 @@
 import { Component } from "react";
 import LocationCard from "../components/LocationCard";
-import api from "../api";
-import '../styles/LocationsPage.css'
+import { locationAPI } from "../api/index";
+import "../styles/LocationsPage.css";
 
 class LocationsPage extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class LocationsPage extends Component {
     }
 
     componentDidMount = async () => {
-        await api.getLocations().then((res) => {
+        await locationAPI.getLocations().then((res) => {
             this.setState({
                 loading: false,
                 locations: [...res.data.data],
@@ -38,7 +38,10 @@ class LocationsPage extends Component {
                     {this.state.locations.map((l) => {
                         return (
                             <li key={l._id}>
-                                <LocationCard className="LocationsPage-card" location={l} />
+                                <LocationCard
+                                    className="LocationsPage-card"
+                                    location={l}
+                                />
                             </li>
                         );
                     })}
