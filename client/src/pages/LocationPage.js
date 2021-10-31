@@ -7,6 +7,7 @@ import ReviewCard from "../components/ReviewCard";
 
 import "../styles/LocationPage.css";
 import "../styles/Stars.css";
+import e from "cors";
 
 class LocationPage extends Component {
     constructor(props) {
@@ -15,14 +16,15 @@ class LocationPage extends Component {
             loading: true,
             edit: false,
             review_body: "",
-            review_rating: 0,
+            review_rating: "0",
             location: [],
             reviews: [],
         };
 
         this.toEdit = this.toEdit.bind(this);
         this.handleReviewBodyChange = this.handleReviewBodyChange.bind(this);
-        this.handleReviewRatingChange = this.handleReviewRatingChange.bind(this);
+        this.handleReviewRatingChange =
+            this.handleReviewRatingChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -53,31 +55,37 @@ class LocationPage extends Component {
 
     handleReviewRatingChange = (evt) => {
         this.setState({
-            [evt.target.name]: evt.target.value,
+            review_rating: evt.target.value,
         });
     };
 
     handleSubmit = async () => {
+        const review = {
+            author: "McButt",
+            body: this.state.review_body,
+            rating: parseInt(this.state.review_rating),
+            location: this.state.location,
+        };
 
-            const review = {
-                author: "McButt",
-                body: this.state.review_body,
-                rating: parseInt(this.state.review_rating),
-                location: this.state.location,
-            };
-
-            await reviewAPI.createReview(this.state.location._id, review);
-
-            await locationAPI
-                .getLocationById(this.state.location._id)
-                .then((res) => {
-                    this.setState({
-                        loading: false,
-                        location: res.data.data,
-                        review: "",
-                    });
+        await reviewAPI
+            .createReview(this.state.location._id, review)
+            .then(() => {
+                this.setState({
+                    review_body: "",
+                    review_rating: "0",
                 });
-        
+            });
+
+        await locationAPI
+            .getLocationById(this.state.location._id)
+            .then((res) => {
+                this.setState({
+                    loading: false,
+                    location: res.data.data,
+                    review_body: "",
+                    review_rating: "0",
+                });
+            });
     };
 
     render() {
@@ -120,23 +128,25 @@ class LocationPage extends Component {
                         <hr></hr>
                         <div className="LocationPage-loaded-content-text-reviewform">
                             <h2>Leave a review</h2>
-                            <fieldset class="starability-basic">
+                            <fieldset
+                                class="starability-basic"
+                                onChange={this.handleReviewRatingChange}
+                            >
                                 <input
                                     type="radio"
                                     id="no-rate"
                                     class="input-no-rate"
-                                    name="review_rating"
-                                    onChange={this.handleReviewRatingChange}
+                                    name="rating"
                                     value="0"
-                                    checked
+                                    checked={this.state.review_rating === "0"}
                                     aria-label="No rating."
                                 />
                                 <input
                                     type="radio"
                                     id="first-rate1"
-                                    name="review_rating"
-                                    onChange={this.handleReviewRatingChange}
+                                    name="rating"
                                     value="1"
+                                    checked={this.state.review_rating === "1"}
                                 />
                                 <label for="first-rate1" title="Terrible">
                                     1 star
@@ -144,9 +154,9 @@ class LocationPage extends Component {
                                 <input
                                     type="radio"
                                     id="first-rate2"
-                                    name="review_rating"
-                                    onChange={this.handleReviewRatingChange}
+                                    name="rating"
                                     value="2"
+                                    checked={this.state.review_rating === "2"}
                                 />
                                 <label for="first-rate2" title="Not good">
                                     2 stars
@@ -154,9 +164,9 @@ class LocationPage extends Component {
                                 <input
                                     type="radio"
                                     id="first-rate3"
-                                    name="review_rating"
-                                    onChange={this.handleReviewRatingChange}
+                                    name="rating"
                                     value="3"
+                                    checked={this.state.review_rating === "3"}
                                 />
                                 <label for="first-rate3" title="Average">
                                     3 stars
@@ -164,9 +174,9 @@ class LocationPage extends Component {
                                 <input
                                     type="radio"
                                     id="first-rate4"
-                                    name="review_rating"
-                                    onChange={this.handleReviewRatingChange}
+                                    name="rating"
                                     value="4"
+                                    checked={this.state.review_rating === "4"}
                                 />
                                 <label for="first-rate4" title="Very good">
                                     4 stars
@@ -174,9 +184,9 @@ class LocationPage extends Component {
                                 <input
                                     type="radio"
                                     id="first-rate5"
-                                    name="review_rating"
-                                    onChange={this.handleReviewRatingChange}
+                                    name="rating"
                                     value="5"
+                                    checked={this.state.review_rating === "5"}
                                 />
                                 <label for="first-rate5" title="Amazing">
                                     5 stars
