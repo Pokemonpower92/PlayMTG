@@ -59,6 +59,14 @@
     margin-bottom: 2%;
 }
 
+.LocationPage-loaded-content-text-reviews {
+    display: flex;
+    flex-direction: column;
+}
+.LocationPage-loaded-content-text-reviews ul {
+    padding: 0;
+}
+
 .LocationPage-loaded-content-text-reviewform {
     display: flex;
     flex-direction: column;

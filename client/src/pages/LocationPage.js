@@ -6,6 +6,7 @@ import { locationAPI, reviewAPI } from "../api/index";
 import ReviewCard from "../components/ReviewCard";
 
 import "../styles/LocationPage.css";
+import "../styles/Stars.css";
 
 class LocationPage extends Component {
     constructor(props) {
@@ -13,13 +14,15 @@ class LocationPage extends Component {
         this.state = {
             loading: true,
             edit: false,
-            review: "",
+            review_body: "",
+            review_rating: 0,
             location: [],
             reviews: [],
         };
 
         this.toEdit = this.toEdit.bind(this);
-        this.handleReviewChange = this.handleReviewChange.bind(this);
+        this.handleReviewBodyChange = this.handleReviewBodyChange.bind(this);
+        this.handleReviewRatingChange = this.handleReviewRatingChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -30,7 +33,8 @@ class LocationPage extends Component {
             this.setState({
                 loading: false,
                 location: res.data.data,
-                review: "",
+                review_body: "",
+                review_rating: "0",
                 reviews: res.data.data.reviews,
             });
         });
@@ -41,32 +45,39 @@ class LocationPage extends Component {
         history.push(`/locations/${this.state.location._id}/edit`);
     };
 
-    handleReviewChange = (evt) => {
+    handleReviewBodyChange = (evt) => {
+        this.setState({
+            [evt.target.name]: evt.target.value,
+        });
+    };
+
+    handleReviewRatingChange = (evt) => {
         this.setState({
             [evt.target.name]: evt.target.value,
         });
     };
 
     handleSubmit = async () => {
-        alert("I submitted the review!");
-        const review = {
-            author: "McButt",
-            body: this.state.review,
-            rating: 5,
-            location: this.state.location,
-        };
 
-        await reviewAPI.createReview(this.state.location._id, review);
+            const review = {
+                author: "McButt",
+                body: this.state.review_body,
+                rating: parseInt(this.state.review_rating),
+                location: this.state.location,
+            };
 
-        await locationAPI
-            .getLocationById(this.state.location._id)
-            .then((res) => {
-                this.setState({
-                    loading: false,
-                    location: res.data.data,
-                    review: "",
+            await reviewAPI.createReview(this.state.location._id, review);
+
+            await locationAPI
+                .getLocationById(this.state.location._id)
+                .then((res) => {
+                    this.setState({
+                        loading: false,
+                        location: res.data.data,
+                        review: "",
+                    });
                 });
-            });
+        
     };
 
     render() {
@@ -107,24 +118,74 @@ class LocationPage extends Component {
                         <hr></hr>
                         <h2>Rating</h2>
                         <hr></hr>
-                        <div className="LocationPage-loaded-content-text-reviews">
-                            <h2>Reviews</h2>
-                            <ul>
-                                {this.state.reviews.map((r) => (
-                                    <ReviewCard 
-                                        className="ReviewCard"
-                                        review={r}
-                                    />
-                                ))}
-                            </ul>
-                            <hr></hr>
-                        </div>
                         <div className="LocationPage-loaded-content-text-reviewform">
                             <h2>Leave a review</h2>
+                            <fieldset class="starability-basic">
+                                <input
+                                    type="radio"
+                                    id="no-rate"
+                                    class="input-no-rate"
+                                    name="review_rating"
+                                    onChange={this.handleReviewRatingChange}
+                                    value="0"
+                                    checked
+                                    aria-label="No rating."
+                                />
+                                <input
+                                    type="radio"
+                                    id="first-rate1"
+                                    name="review_rating"
+                                    onChange={this.handleReviewRatingChange}
+                                    value="1"
+                                />
+                                <label for="first-rate1" title="Terrible">
+                                    1 star
+                                </label>
+                                <input
+                                    type="radio"
+                                    id="first-rate2"
+                                    name="review_rating"
+                                    onChange={this.handleReviewRatingChange}
+                                    value="2"
+                                />
+                                <label for="first-rate2" title="Not good">
+                                    2 stars
+                                </label>
+                                <input
+                                    type="radio"
+                                    id="first-rate3"
+                                    name="review_rating"
+                                    onChange={this.handleReviewRatingChange}
+                                    value="3"
+                                />
+                                <label for="first-rate3" title="Average">
+                                    3 stars
+                                </label>
+                                <input
+                                    type="radio"
+                                    id="first-rate4"
+                                    name="review_rating"
+                                    onChange={this.handleReviewRatingChange}
+                                    value="4"
+                                />
+                                <label for="first-rate4" title="Very good">
+                                    4 stars
+                                </label>
+                                <input
+                                    type="radio"
+                                    id="first-rate5"
+                                    name="review_rating"
+                                    onChange={this.handleReviewRatingChange}
+                                    value="5"
+                                />
+                                <label for="first-rate5" title="Amazing">
+                                    5 stars
+                                </label>
+                            </fieldset>
                             <textarea
-                                name="review"
-                                value={this.state.review}
-                                onChange={this.handleReviewChange}
+                                name="review_body"
+                                value={this.state.review_body}
+                                onChange={this.handleReviewBodyChange}
                                 className="LocationPage-loaded-content-text-reviewform-form"
                             ></textarea>
                             <Button
@@ -133,6 +194,17 @@ class LocationPage extends Component {
                             >
                                 Submit
                             </Button>
+                        </div>
+                        <div className="LocationPage-loaded-content-text-reviews">
+                            <h2>Reviews</h2>
+                            <ul>
+                                {this.state.reviews.map((r) => (
+                                    <ReviewCard
+                                        className="ReviewCard"
+                                        review={r}
+                                    />
+                                ))}
+                            </ul>
                         </div>
                     </div>
                 </div>
