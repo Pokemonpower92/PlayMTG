@@ -1,6 +1,6 @@
 import { Component } from "react";
 import LocationCard from "../components/LocationCard";
-import { locationAPI } from "../api/index";
+import { locationAPI } from "../api";
 import "../styles/LocationsPage.css";
 
 class LocationsPage extends Component {

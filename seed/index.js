@@ -44,10 +44,10 @@ const seedDB = async () => {
         const description = randomElement(descriptions);
         const cityElement = randomElement(cities);
 
-        const location = `${cityElement.city}, ${cityElement.state}`;
+        const address = `${cityElement.city}, ${cityElement.state}`;
         let s = new Location({
             name: nameOne + nameTwo,
-            location: location,
+            address: address,
             description: description,
         });
 

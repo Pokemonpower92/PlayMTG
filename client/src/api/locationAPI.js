@@ -12,16 +12,12 @@ export const updateLocation = (id, payload) =>
 export const getLocationById = (id) => api.get(`/locations/${id}`);
 export const deleteLocation = (id) => api.delete(`/locations/${id}`);
 
-// Review apis.
-export const getReviews = (id) => api.get(`/locations/${id}/reviews`);
-
 const locationAPI = {
     createLocation,
     getLocations,
     updateLocation,
     getLocationById,
     deleteLocation,
-    getReviews,
 };
 
 export default locationAPI;

@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Card, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import "../styles/ReviewCard.css";
 import "../styles/Stars.css"
 

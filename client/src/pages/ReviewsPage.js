@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { reviewAPI } from "../api/index";
+import { reviewAPI } from "../api";
 import "../styles/LocationsPage.css";
 
 class ReviewsPage extends Component {

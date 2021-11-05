@@ -13,13 +13,13 @@ const LocationCard = (props) => {
                 <div className="LocationCard-image">
                     <Card.Img 
                         variant="top" 
-                        src={location.image ? location.image : Default} 
+                        src={Default} 
                     />
                 </div>
                 <div className="LocationCard-content">
                     <Card.Body>
                         <Card.Title>{location.name}</Card.Title>
-                        <Card.Subtitle>{location.location}</Card.Subtitle>
+                        <Card.Subtitle>{location.address}</Card.Subtitle>
                         <Card.Text>{location.description}</Card.Text>
                     </Card.Body>
                     <ListGroup className="LocationCard-listgroup" variant="flush">

@@ -35,6 +35,8 @@ updateLocation = async (req, res) => {
     const id = req.params.id;
     const body = req.body;
 
+    console.log("Nope!")
+
     if (!id) {
         res.status(400).json({
             success: false,
@@ -49,6 +51,7 @@ updateLocation = async (req, res) => {
     }
 
     const location = await Location.findById(id).catch( () => {
+        console.log("Why tho")
         res.status(404).json({
             success: false,
             message: `Location ${id} not found.`,
@@ -56,13 +59,16 @@ updateLocation = async (req, res) => {
     });
 
     location.name = body.name;
-    location.location = body.location;
+    location.address = body.address;
     location.description = body.description;
     location.image = body.image;
     location.phone = body.phone;
     location.website = body.website;
-    location.rating = location.rating;
-    location.reviews = []
+    location.rating = 0;
+    location.reviews = location.reviews;
+
+    console.log(location.rating)
+    console.log(location.reviews)
 
     location.save()
         .then(() => {
@@ -72,6 +78,7 @@ updateLocation = async (req, res) => {
             });
         })
         .catch(err => {
+            console.log(err)
             return res.status(404).json({
                 err,
                 message: "Location not updated"

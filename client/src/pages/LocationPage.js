@@ -2,12 +2,11 @@ import { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import Default from "../img/cards.jpg";
-import { locationAPI, reviewAPI } from "../api/index";
+import { locationAPI, reviewAPI } from "../api/";
 import ReviewCard from "../components/ReviewCard";
 
 import "../styles/LocationPage.css";
 import "../styles/Stars.css";
-import e from "cors";
 
 class LocationPage extends Component {
     constructor(props) {
@@ -67,25 +66,13 @@ class LocationPage extends Component {
             location: this.state.location,
         };
 
+        
         await reviewAPI
             .createReview(this.state.location._id, review)
             .then(() => {
-                this.setState({
-                    review_body: "",
-                    review_rating: "0",
-                });
-            });
-
-        await locationAPI
-            .getLocationById(this.state.location._id)
-            .then((res) => {
-                this.setState({
-                    loading: false,
-                    location: res.data.data,
-                    review_body: "",
-                    review_rating: "0",
-                });
-            });
+                window.alert("Review posted!")
+                window.location.reload(false);
+            })
     };
 
     render() {
@@ -96,7 +83,7 @@ class LocationPage extends Component {
             </div>
         );
         // Render location components eventually.
-        // For now render links.
+        // htmlFor now render links.
         const loaded = (
             <div className="LocationPage-loaded">
                 <div className="LocationPage-loaded-header">
@@ -109,33 +96,31 @@ class LocationPage extends Component {
                     <div className="LocationPage-loaded-content-info">
                         <div className="LocationPage-loaded-content-info-image">
                             {this.state.location.image ? (
-                                <img src={this.state.location.image} alt="" />
+                                <img src={Default} alt="" />
                             ) : (
                                 <img src={Default} alt="" />
                             )}
                         </div>
                         <div className="LocationPage-loaded-content-info-text">
-                            <p>Location: {this.state.location.location}</p>
+                            <p>Location: {this.state.location.address}</p>
                             <p>Phone: {this.state.location.phone}</p>
                             <p>Website: {this.state.location.website}</p>
                         </div>
                     </div>
                     <div className="LocationPage-loaded-content-text">
-                        <h2>Description</h2>
-                        <p>{this.state.location.description}</p>
-                        <hr></hr>
                         <h2>Rating</h2>
+                        <p>{this.state.location.description}</p>
                         <hr></hr>
                         <div className="LocationPage-loaded-content-text-reviewform">
                             <h2>Leave a review</h2>
                             <fieldset
-                                class="starability-basic"
+                                className="starability-basic"
                                 onChange={this.handleReviewRatingChange}
                             >
                                 <input
                                     type="radio"
                                     id="no-rate"
-                                    class="input-no-rate"
+                                    className="input-no-rate"
                                     name="rating"
                                     value="0"
                                     checked={this.state.review_rating === "0"}
@@ -148,7 +133,7 @@ class LocationPage extends Component {
                                     value="1"
                                     checked={this.state.review_rating === "1"}
                                 />
-                                <label for="first-rate1" title="Terrible">
+                                <label htmlFor="first-rate1" title="Terrible">
                                     1 star
                                 </label>
                                 <input
@@ -158,7 +143,7 @@ class LocationPage extends Component {
                                     value="2"
                                     checked={this.state.review_rating === "2"}
                                 />
-                                <label for="first-rate2" title="Not good">
+                                <label htmlFor="first-rate2" title="Not good">
                                     2 stars
                                 </label>
                                 <input
@@ -168,7 +153,7 @@ class LocationPage extends Component {
                                     value="3"
                                     checked={this.state.review_rating === "3"}
                                 />
-                                <label for="first-rate3" title="Average">
+                                <label htmlFor="first-rate3" title="Average">
                                     3 stars
                                 </label>
                                 <input
@@ -178,7 +163,7 @@ class LocationPage extends Component {
                                     value="4"
                                     checked={this.state.review_rating === "4"}
                                 />
-                                <label for="first-rate4" title="Very good">
+                                <label htmlFor="first-rate4" title="Very good">
                                     4 stars
                                 </label>
                                 <input
@@ -188,7 +173,7 @@ class LocationPage extends Component {
                                     value="5"
                                     checked={this.state.review_rating === "5"}
                                 />
-                                <label for="first-rate5" title="Amazing">
+                                <label htmlFor="first-rate5" title="Amazing">
                                     5 stars
                                 </label>
                             </fieldset>
@@ -205,6 +190,7 @@ class LocationPage extends Component {
                                 Submit
                             </Button>
                         </div>
+                        <hr></hr>
                         <div className="LocationPage-loaded-content-text-reviews">
                             <h2>Reviews</h2>
                             <ul>

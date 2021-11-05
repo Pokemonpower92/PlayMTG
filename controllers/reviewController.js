@@ -5,7 +5,6 @@ const Location = require("../models/location");
 createReview = async (req, res) => {
     const body = req.body;
     const id = req.params.id;
-
     
     if (!body) {
         res.send(400).json({
@@ -26,15 +25,15 @@ createReview = async (req, res) => {
             console.log("huh");
         });
 
+        
     newReview
-        .save()
-        .catch((err) => {
-            console.log(`This is the error: ${err}`);
-            res.send(400).json({
-                success: false,
-                message: "No review created",
-            });
-        });
+    .save()
+    .then(() => {
+        res.sendStatus(201);
+    })
+    .catch((err) => {
+        console.log(err)
+    });
 };
 
 updateReview = async (req, res) => {

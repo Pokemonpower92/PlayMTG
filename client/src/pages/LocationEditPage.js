@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { locationAPI } from "../api/index";
+import { locationAPI } from "../api";
 import { Button } from "react-bootstrap";
 import "../styles/LocationEditPage.css";
 
@@ -39,7 +39,7 @@ class LocationEditPage extends Component {
                 location: location,
                 description: location.description,
                 phone: location.phone,
-                address: location.location,
+                address: location.address,
                 website: location.website,
             });
         });
@@ -82,7 +82,6 @@ class LocationEditPage extends Component {
     };
 
     handleSubmit = async (evt) => {
-        evt.preventDefault();
         const { name, image, description, phone, address, website } =
             this.state;
         const payload = { name, image, description, phone, address, website };
@@ -90,8 +89,12 @@ class LocationEditPage extends Component {
         await locationAPI
             .updateLocation(this.state.location._id, payload)
             .then((res) => {
-                window.alert("Location Sucessfully Edited");
-            });
+                window.alert("Store successfully edited!")
+                window.location.reload(false);
+            })
+            .catch(err => {
+                console.log(err);
+            })
     };
 
     render() {
@@ -105,7 +108,7 @@ class LocationEditPage extends Component {
         const loaded = (
             <div className="LocationEditPage-loaded">
                 <div className="LocationEditPage-loaded-title">
-                    <h1>Edit {this.state.name}</h1>
+                    <h1>Edit {this.location.name}</h1>
                 </div>
                 <div className="LocationEditPage-loaded-form">
                     <form>
