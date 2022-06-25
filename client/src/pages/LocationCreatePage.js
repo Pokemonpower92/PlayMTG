@@ -1,13 +1,12 @@
 import { Component } from "react";
 import { locationAPI } from "../api";
 import { Button } from "react-bootstrap";
-import "../styles/LocationEditPage.css";
+import "../styles/LocationCreatePage.css";
 
-class LocationEditPage extends Component {
+class LocationCreatePage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			loading: true,
 			name: "",
 			image: "",
 			desciption: "",
@@ -25,25 +24,6 @@ class LocationEditPage extends Component {
 		this.handleWebsiteChange = this.handleWebsiteChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
-
-	componentDidMount = async () => {
-		const id = this.props.match.params.id;
-
-		await locationAPI.getLocationById(id).then((res) => {
-			let location = res.data.data;
-
-			this.setState({
-				loading: false,
-				name: location.name,
-				image: location.image,
-				location: location,
-				description: location.description,
-				phone: location.phone,
-				address: location.address,
-				website: location.website,
-			});
-		});
-	};
 
 	handleNameChange = (evt) => {
 		this.setState({
@@ -87,9 +67,9 @@ class LocationEditPage extends Component {
 		const payload = { name, image, description, phone, address, website };
 
 		await locationAPI
-			.updateLocation(this.state.location._id, payload)
+			.createLocation(payload)
 			.then((res) => {
-				window.alert("Store successfully edited!");
+				window.alert("Store successfully created!");
 				window.location.reload(false);
 			})
 			.catch((err) => {
@@ -98,17 +78,10 @@ class LocationEditPage extends Component {
 	};
 
 	render() {
-		// Render a loading screen if necessary.
-		const loading = (
-			<div className="LocationEditPage-loading">
-				<h1>Loading</h1>
-			</div>
-		);
-
-		const loaded = (
+		return (
 			<div className="LocationEditPage-loaded">
 				<div className="LocationEditPage-loaded-title">
-					<h1>Edit {this.state.location.name}</h1>
+					<h1>Add a Great Place to Play!</h1>
 				</div>
 				<div className="LocationEditPage-loaded-form">
 					<form>
@@ -171,18 +144,13 @@ class LocationEditPage extends Component {
 							className="LocationEditPage-loaded-form-description"
 						></textarea>
 						<Button variant="secondary" onClick={this.handleSubmit}>
-							Edit
+							Submit
 						</Button>
 					</form>
 				</div>
 			</div>
 		);
-		return (
-			<div className="LocationEditPage">
-				{this.state.loading ? loading : loaded}
-			</div>
-		);
 	}
 }
 
-export default LocationEditPage;
+export default LocationCreatePage;
